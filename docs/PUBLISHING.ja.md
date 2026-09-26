@@ -34,13 +34,13 @@ CI artifactは検証レポートだけです。単体カバレッジ、ブラウ
 
 ## 必須チェックとレビュー
 
-初回CI実行後、`main` の保護を次のように設定します。
+`main` の必須保護方針は次のとおりです。
 
 - PR経由と1名以上のApproveを必須にします。
 - GitHub Actionsの `test-and-build` を必須チェックにし、マージ前にベースブランチへの追従を要求します。
 - 追加コミット時に古い承認を無効にします。
 - 通常の貢献でこれらの条件を迂回しない設定にします。
 
-単体カバレッジ未達、テスト・ビルド・起動失敗でworkflowが失敗する設定は実装済みです。リポジトリ側の保護は **未設定・未確認** です。workflowのコミットだけでは有効になりません。CI成功後のApproveは運用で守り、マージ時はGitHubでチェックと承認の両方を要求します。
+単体カバレッジ未達、テスト・ビルド・起動失敗でworkflowが失敗する設定は実装済みです。GitHub設定でもリポジトリ側の保護を有効にする必要があり、workflowのコミットだけでは強制されません。CI成功後のApproveは運用で守り、マージ時はGitHubでチェックと承認の両方を要求します。
 
 参考：[GitHubのブランチ保護](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches)。

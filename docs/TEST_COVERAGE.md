@@ -2,7 +2,7 @@
 
 English | [日本語](TEST_COVERAGE.ja.md)
 
-Measured on 2026-09-26 with Node.js v26.5.0 built-in V8 coverage: 81 tests passed. CI uses Node.js 24; use its execution log for remote figures. GitHub-hosted execution has not yet been verified.
+Measured on 2026-09-26 with Node.js v26.5.0 built-in V8 coverage: 81 tests passed. CI uses Node.js 24; use its execution log for remote figures. [The first Node.js 24 GitHub CI run](https://github.com/ikob/AnnumAequitas/actions/runs/36248005208) passed all checks.
 
 ```sh
 npm run test:coverage
@@ -57,7 +57,7 @@ Core workflows cover explicit consent, actual cookie persistence, reload and old
 
 Run `npm run test:e2e`. Playwright invokes `npm start`, which builds through prestart before serving the app; no separate CI build is needed. Install Chrome with `npx playwright install chrome` if needed; Linux CI uses `--with-deps`. CI requires unit checks, build, and E2E to pass, and retains HTML reports/failure screenshots/traces for 30 days. Open local results with `npx playwright show-report`.
 
-Configuration follows [Playwright's CI guidance](https://playwright.dev/docs/ci). Local Chrome success does not establish Safari or all-workflow compatibility. Remote CI awaits publication.
+Configuration follows [Playwright's CI guidance](https://playwright.dev/docs/ci). Local Chrome success does not establish Safari or all-workflow compatibility. [Remote CI has passed](https://github.com/ikob/AnnumAequitas/actions/runs/36248005208).
 
 ## E2E execution coverage
 

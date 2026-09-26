@@ -46,6 +46,6 @@
 
 アダプター分離後、ローカルの単体81件、ビルド、Chrome E2E 17件が成功。単体で全登録クラスの判定、明示指定不一致、曖昧判定、未対応復元、混在保存復元を検証。main.tsもE2Eで計測する。閾値・数値・限界は [TEST_COVERAGE](TEST_COVERAGE.ja.md) を参照。
 
-`npm start` はprestartでビルドしてループバックで起動する。Playwrightも同じ経路を使い、CIの別build工程とdistアップロードは廃止。CIはNode.js 24、`npm ci`、読み取り権限のGitHub-hosted runnerで実行し、相場の実取得・個人資料・秘密情報は不要。公開後のCI状態はGitHubの実行結果で確認する。現在はREADMEの利用者確認待ちで、今回の実装のコミット・pushは未実施。
+`npm start` はprestartでビルドしてループバックで起動する。Playwrightも同じ経路を使い、CIの別build工程とdistアップロードは廃止。CIはNode.js 24、`npm ci`、読み取り権限のGitHub-hosted runnerで実行し、相場の実取得・個人資料・秘密情報は不要。公開後のCI状態はGitHubの実行結果で確認する。初回コミットをPublicのmainへ公開済み。[初回GitHub CI](https://github.com/ikob/AnnumAequitas/actions/runs/36248005208)で依存関係導入・単体カバレッジ・ビルド/起動・Chrome E2Eが成功。
 
 実形式未検証、株式分割、会社から独立した保存モデル、Safariの操作等は [UNCONFIRMED](UNCONFIRMED.ja.md) を参照。未確認の項目をテスト成功だけで対応済みにしない。

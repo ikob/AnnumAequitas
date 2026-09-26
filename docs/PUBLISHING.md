@@ -34,13 +34,13 @@ The display name is AnnumAequitas; npm and test-report artifact prefixes use ann
 
 ## Required checks and review
 
-After the first CI run, configure protection for `main`:
+Required protection policy for `main`:
 
 - Require a pull request with at least one approving review.
 - Require the `test-and-build` status check from GitHub Actions and require the branch to be up to date before merging.
 - Dismiss stale approvals when new commits are pushed.
 - Do not allow bypassing these requirements for normal contributions.
 
-The workflow already fails when unit coverage is below its thresholds or tests/build/startup fail. Repository-side protection has **not yet been configured or verified**. It is not enabled by committing the workflow. Reviewers wait for green CI before approval; GitHub enforces the required check and review together at merge time.
+The workflow already fails when unit coverage is below its thresholds or tests/build/startup fail. Repository-side protection must also be enabled in GitHub settings; committing the workflow alone does not enforce it. Reviewers wait for green CI before approval; GitHub enforces the required check and review together at merge time.
 
 Reference: [GitHub protected branches](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches).

@@ -57,7 +57,7 @@ See [HANDOFF](HANDOFF.md), [GMO](GMO.md), and [REFACTOR](REFACTOR.md) for implem
 
 | ID | Status | Current behavior and open question | Completion criteria |
 | --- | --- | --- | --- |
-| DIST-01 | Unverified | GitHub-hosted CI and source installation. Local checks pass; remote execution is unverified. | Verify npm install and npm start from the public repository and pass remote CI. |
+| DIST-01 | Unverified | GitHub-hosted CI and source installation. Local checks and the first GitHub CI run pass; a fresh end-user installation remains unverified. | Verify npm install and npm start from the public repository and pass remote CI. |
 | DIST-02 | Out of scope (2026-09-26) | Prebuilt application and Release bundles are discontinued in favor of source installation with npm. | CI artifacts remain for verification reports only. |
 | CONSENT-01 | Unverified | Safari consent, cookie refusal, expiry, and version upgrades. Pure functions/rendering and Chrome acceptance, cookie persistence, reload, and old-version renewal are tested. | Verify initial/restarted sessions, renewed consent, language switching, and preservation of current records on local HTTP. |
 | CONSENT-02 | Unverified | Legal effectiveness of the disclaimer. | Obtain specialist review appropriate to intended use and applicable law. |

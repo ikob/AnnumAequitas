@@ -2,7 +2,7 @@
 
 [English](TEST_COVERAGE.md) | 日本語
 
-2026-09-26、Node.js v26.5.0の組み込みV8テストカバレッジで測定。81テスト成功。CIはNode24なので、ホスト上の数値はその実行ログで確認する（現時点でGitHub上は未実行）。
+2026-09-26、Node.js v26.5.0の組み込みV8テストカバレッジで測定。81テスト成功。CIはNode24なので、ホスト上の数値はその実行ログで確認する（[初回GitHub CI](https://github.com/ikob/AnnumAequitas/actions/runs/36248005208)は全チェック成功）。
 
 ```sh
 npm run test:coverage
@@ -59,7 +59,7 @@ Playwrightでビルド済みアプリを専用の127.0.0.1:4178で起動する�
 
 実行: `npm run test:e2e`。Playwrightは `npm start` を使い、prestartによるビルドから起動まで検証するため、CIの別build工程は不要。Google Chromeが未導入なら `npx playwright install chrome`。CIは `npx playwright install --with-deps chrome` で準備し、単体テスト・ビルド・E2Eすべての成功を要求する。HTMLレポートと失敗時のスクリーンショット・traceを30日保持。`npx playwright show-report`でローカルレポートを開ける。
 
-設定は [Playwright公式CI手順](https://playwright.dev/docs/ci) に基づく。ローカルChromeで実行確認し、GitHub-hosted CIはpush後の初回実行待ち。Safariや全操作を検証済みという意味ではない。
+設定は [Playwright公式CI手順](https://playwright.dev/docs/ci) に基づく。ローカルChromeで実行確認し、[GitHub-hosted CI](https://github.com/ikob/AnnumAequitas/actions/runs/36248005208)も初回実行成功。Safariや全操作を検証済みという意味ではない。
 
 ## E2Eの実行カバレッジ（2026-09-26）
 

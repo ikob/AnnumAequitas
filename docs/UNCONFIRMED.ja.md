@@ -60,7 +60,7 @@ IssueやPRでは上記IDを参照し、対象の会社・資料種類・形式�
 
 | ID | 状態 | 未確認事項・現在の動作 | 完了条件 |
 |---|---|---|---|
-| DIST-01 | UNCONFIRMED / 未検証 | GitHub上のCIとソースからのインストール。ローカル検証済みだがリモート未実行。 | 公開リポジトリからnpm install・npm startとリモートCIを検証する。 |
+| DIST-01 | UNCONFIRMED / 未検証 | GitHub上のCIとソースからのインストール。ローカル検証と初回GitHub CIは成功。利用者による新規cloneからの導入は未検証。 | 公開リポジトリからnpm install・npm startとリモートCIを検証する。 |
 | DIST-02 | 対象外（2026-09-26） | ビルド済みアプリ・Release添付の配布は廃止。ソースからnpmで利用する。 | 検証レポートのCI artifactは維持する。 |
 | CONSENT-01 | UNCONFIRMED / 未検証 | 免責同意のSafari実操作、Cookie不許可、期限切れ、版更新。純粋関数と画面生成、Chromeの明示同意・Cookie保存・再読込・旧版再同意はテスト済み。 | ローカルHTTPで初回・再起動・再同意・言語切替・既存記録保持を確認する。 |
 | CONSENT-02 | UNCONFIRMED / 未検証 | 免責文言の法的有効性。 | 対象の利用形態と適用法に応じた専門レビュー。 |
