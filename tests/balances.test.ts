@@ -1,0 +1,60 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { detectDocument } from '../src/balances.ts';
+import { emptyLedger, importCsv, readLedger } from '../src/ledger.ts';
+import { balancesDisplay } from '../src/balances-display.ts';
+const holdings = 'COB Date,Account #,Symbol,Security Description,Quantity,Price ($),Value ($)\n9/25/2026,DEMO-01,FICT,Fictional Company,12.123456789,25.00,303.09';
+const portfolio = 'COB Date,Account #,Cash Balance ($),Money Accounts ($),Priced Investments ($),Net Value ($),\n9/25/2026,DEMO-01,"1,200.50",0.00,303.09,1503.59,';
+const activity = readFileSync(new URL('../data/sample-ml/demo.csv', import.meta.url), 'utf8');
+test('mixed document imports detect by headers, isolate balances, preserve source and roundtrip', async () => {
+  let ledger = emptyLedger();
+  for (const csv of [holdings, portfolio, activity]) ledger = (await importCsv(ledger, csv, 'arbitrary.csv')).ledger;
+  assert.deepEqual(ledger.sources.map(s => s.documentKind), ['holdings','portfolio','activity']);
+  assert.equal(ledger.balances.length, 2);
+  assert.equal(ledger.transactions.length, 6);
+  assert.equal(ledger.balances[0].quantity, '12.123456789');
+  assert.equal(ledger.balances[1].cash, '1200.50');
+  assert.equal(ledger.balances[1].moneyAccounts, '0.00');
+  assert.deepEqual(readLedger(JSON.stringify(ledger)), ledger);
+  assert.equal((await importCsv(ledger, holdings, 'renamed.csv', 'merrill')).repeated, true);
+});
+test('realtime snapshots remain separate and missing or invalid values never become zero', async () => {
+  const csv = holdings.replace('COB Date', 'Date,Time').replace('9/25/2026', '9/26/2026,12:00 ET').replace('12.123456789,25.00', '--,invalid');
+  const result = (await importCsv(emptyLedger(), csv, 'snapshot.csv')).ledger;
+  const b = result.balances[0];
+  assert.equal(b.basis, 'realtime'); assert.equal(b.time, '12:00 ET');
+  assert.equal(b.quantity, null); assert.equal(b.price, null);
+  assert.deepEqual(b.issues, ['Quantity', 'Price ($)']);
+  const both = (await importCsv(result, holdings, 'cob.csv')).ledger;
+  assert.equal(both.balances.length, 2);
+  assert.equal(both.transactions.length, 0);
+});
+test('unknown, ambiguous, duplicate headers and malformed widths fail atomically', async () => {
+  assert.throws(() => detectDocument('a,b\n1,2'));
+  assert.throws(() => detectDocument(holdings.replace('Symbol', 'Quantity')));
+  assert.throws(() => detectDocument(portfolio.replace('1503.59,', '1503.59,unexpected')));
+  assert.throws(() => detectDocument(holdings.replace('Value ($)', 'Value ($),Cash Balance ($),Money Accounts ($),Priced Investments ($),Net Value ($)').replace('303.09', '303.09,1,2,3,4')));
+  const initial = emptyLedger();
+  await assert.rejects(importCsv(initial, holdings + ',extra', 'broken.csv'));
+  assert.equal(initial.sources.length, 0);
+});
+test('old saves migrate and restored snapshots rebuild values from raw with reference validation', async () => {
+  const old = JSON.parse(JSON.stringify((await importCsv(emptyLedger(), activity, 'activity.csv')).ledger));
+  delete old.balances; old.sources.forEach((s: Record<string, unknown>) => { delete s.broker; delete s.documentKind; });
+  assert.deepEqual(readLedger(JSON.stringify(old)).balances, []);
+  const ledger = (await importCsv(emptyLedger(), holdings, 'holdings.csv')).ledger;
+  ledger.balances[0].quantity = '999';
+  assert.equal(readLedger(JSON.stringify(ledger)).balances[0].quantity, '12.123456789');
+  ledger.balances[0].sourceId = 'missing';
+  assert.throws(() => readLedger(JSON.stringify(ledger)));
+});
+test('snapshot display escapes source data and shows component labels in both languages', async () => {
+  const ledger = (await importCsv(emptyLedger(), holdings.replace('FICT', '<script>'), '<img>.csv')).ledger;
+  const en = balancesDisplay(ledger, 'en');
+  assert.ok(en.includes('&lt;script&gt;')); assert.ok(en.includes('&lt;img&gt;'));
+  assert.ok(!en.includes('<script>')); assert.ok(en.includes('COB'));
+  const p = (await importCsv(ledger, portfolio, 'p.csv')).ledger;
+  assert.ok(balancesDisplay(p, 'ja').includes('現金残高'));
+  assert.ok(balancesDisplay(p, 'en').includes('Money Accounts'));
+});

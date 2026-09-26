@@ -1,0 +1,34 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { emptyLedger, importCsv, resolveKnownSymbols, readLedger } from '../src/ledger.ts';
+import { makePriceSeries, mergePriceSeries, choosePrice } from '../src/market.ts';
+import { ledgerPriceCells } from '../src/price-display.ts';
+const csv = readFileSync(new URL('../data/sample-ml/demo.csv', import.meta.url), 'utf8');
+test('ledger rendering shows imported close immediately and keeps the reviewed estimate fixed on updates', async () => {
+  let ledger = resolveKnownSymbols((await importCsv(emptyLedger(), csv, 'fictional.csv')).ledger, [{ name: 'Fictional', symbol: 'FICT', exchange: 'NASDAQ' }]);
+  const t = ledger.transactions[0];
+  assert.match(ledgerPriceCells(ledger, t, 'en'), /No exact-date close/);
+  const options = { symbol: 'FICT', exchange: 'NASDAQ' as const, providerSymbol: 'fict.us', start: '2023-12-28', end: '2023-12-28', fetchedAt: '2026-09-26T00:00:00.000Z' };
+  const quotes = 'Date,Open,High,Low,Close\n2023-12-28,40,45,39,43.125\n';
+  ledger = mergePriceSeries(ledger, [await makePriceSeries(quotes, options)]);
+  const imported = ledgerPriceCells(ledger, t, 'en');
+  assert.match(imported, /43.125 USD/);
+  assert.match(imported, /Candidate · not reviewed/);
+  assert.match(imported, /2023-12-28 · Stooq/);
+  assert.equal(ledger.priceChoices.length, 0);
+  ledger = choosePrice(ledger, t.id, 0); // CB estimate, independently reviewed
+  ledger = mergePriceSeries(ledger, [await makePriceSeries(quotes.replace('43.125', '44.25'), { ...options, fetchedAt: '2026-09-27T00:00:00.000Z' })]);
+  ledger = readLedger(JSON.stringify(ledger));
+  const reviewed = ledgerPriceCells(ledger, ledger.transactions[0], 'en');
+  assert.match(reviewed, /42.50 USD/);
+  assert.match(reviewed, /44.25 USD/);
+  assert.match(reviewed, /Reviewed estimate/);
+  assert.equal(t.amount, '0.00');
+  assert.equal(t.price, null);
+  assert.match(ledgerPriceCells(ledger, ledger.transactions[0], 'ja'), /レビュー済み参考単価/);
+  assert.match(ledgerPriceCells(ledger, ledger.transactions[4], 'en'), /60.00 USD/);
+  assert.doesNotMatch(ledgerPriceCells(ledger, ledger.transactions[2], 'en'), /43.125|44.25/);
+  ledger.mappings = [];
+  assert.doesNotMatch(ledgerPriceCells(ledger, t, 'en'), /Reviewed estimate|Stooq/);
+});

@@ -1,0 +1,2 @@
+COB Date,Security #,Symbol,CUSIP #,Security Description,Account Nickname,Account Registration,Account #,Quantity,Price ($),Value ($),Unrealized Gain/Loss ($),Unrealized Gain/Loss (%),Cumulative Investment Return ($),Cumulative Investment Return (%),Accrued Interest ($)
+12/31/2025,DEMO-SEC-FICT,FICT,DEMO-CUSIP-FICT,Fictional Cloud Corporation,FICTIONAL RSU,FICTIONAL TEST HOLDER,DEMO-MULTI-0001,125,74.00,9250.00,--,--,--,--,0.00

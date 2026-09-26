@@ -1,0 +1,4 @@
+Trade Date,Settlement Date,Pending/Settled,Account Nickname,Account Registration,Account #,Type,"Description 1 ",Description 2,Symbol/CUSIP #,Quantity,Price ($),Amount ($)
+02/15/2024,02/15/2024,Settled,FICTIONAL RSU,FICTIONAL TEST HOLDER,DEMO-MULTI-0001,SecurityTransactions,Transfer / Adjustment,Fictional Cloud Corporation FICTIONAL RSU ACTIVITY LAPSE DATE 02/15/2024 CB 100.00,FICT,10,--,0.00
+06/14/2024,06/14/2024,Settled,FICTIONAL RSU,FICTIONAL TEST HOLDER,DEMO-MULTI-0001,SecurityTransactions,Stock Split,Fictional Cloud Corporation FICTIONAL 2 FOR 1 SPLIT; additional shares 10; NOT VERIFIED MERRILL FORMAT,FICT,10,--,0.00
+08/15/2024,08/15/2024,Settled,FICTIONAL RSU,FICTIONAL TEST HOLDER,DEMO-MULTI-0001,SecurityTransactions,Sale,Fictional Cloud Corporation FICTIONAL SALE; net after USD 1 commission,FICT,(4),60.00,239.00

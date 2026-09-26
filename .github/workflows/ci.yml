@@ -1,0 +1,46 @@
+name: CI
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - name: Tests and coverage gate
+        shell: bash
+        run: npm run test:coverage 2>&1 | tee coverage-report.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: annum-aequitas-coverage-${{ github.sha }}
+          path: coverage-report.txt
+          if-no-files-found: warn
+          retention-days: 30
+      - run: npx playwright install --with-deps chrome
+      - name: Browser tests including build and local startup
+        run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: annum-aequitas-browser-tests-${{ github.sha }}
+          path: |
+            playwright-report/
+            test-results/
+            coverage/e2e/
+          if-no-files-found: warn
+          retention-days: 30

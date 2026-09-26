@@ -1,0 +1,33 @@
+.DS_Store
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+.env
+.env.*
+!.env.example
+
+# Private records and working caches. Verify provenance and redistribution rights before sharing market data.
+/private/
+/data/raw/
+/data/private/
+/data/cache/
+/outputs/
+*.ofx
+*.qfx
+SettledActivity_*.csv
+
+# Local real-data directories at any depth
+real-*/
+
+# Downloaded exchange directory; redistribution terms not yet verified
+/public/instruments.json
+/public/instruments.json.tmp
+
+# Downloaded public market data, not licensed for redistribution
+/public/prices.json
+/public/prices.json.tmp
+
+/public/fx.json
+/public/fx.json.tmp

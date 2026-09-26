@@ -1,0 +1,76 @@
+{
+  "fictional": true,
+  "opening": {
+    "date": "2022-01-01",
+    "quantity": "40",
+    "cash": "100.00",
+    "cost": null
+  },
+  "snapshots": [
+    {
+      "year": 2022,
+      "date": "2022-12-31",
+      "quantity": "120",
+      "cash": "1145.36",
+      "investments": "5760.00",
+      "net": "6905.36",
+      "dividends": "61.00",
+      "withholding": "(14.64)",
+      "proceeds": "999.00",
+      "vested": "4200.00",
+      "rows": 7
+    },
+    {
+      "year": 2023,
+      "date": "2023-12-31",
+      "quantity": "50",
+      "cash": "8180.36",
+      "investments": "2600.00",
+      "net": "10780.36",
+      "dividends": "50.00",
+      "withholding": "(12.00)",
+      "proceeds": "6997.00",
+      "vested": "2650.00",
+      "rows": 8
+    },
+    {
+      "year": 2024,
+      "date": "2024-12-31",
+      "quantity": "100",
+      "cash": "9319.26",
+      "investments": "6800.00",
+      "net": "16119.26",
+      "dividends": "52.50",
+      "withholding": "(12.60)",
+      "proceeds": "1099.00",
+      "vested": "4350.00",
+      "rows": 7
+    },
+    {
+      "year": 2025,
+      "date": "2025-12-31",
+      "quantity": "125",
+      "cash": "12674.26",
+      "investments": "9250.00",
+      "net": "21924.26",
+      "dividends": "75.00",
+      "withholding": "(18.00)",
+      "proceeds": "3298.00",
+      "vested": "4940.00",
+      "rows": 8
+    },
+    {
+      "year": 2026,
+      "date": "2026-09-25",
+      "quantity": "175",
+      "cash": "13641.66",
+      "investments": "14700.00",
+      "net": "28341.66",
+      "dividends": "90.00",
+      "withholding": "(21.60)",
+      "proceeds": "899.00",
+      "vested": "4745.00",
+      "rows": 7
+    }
+  ]
+}
